@@ -23,7 +23,7 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
     super.new(name);
   endfunction
 
-  function void init_reg(REG_T reg_name);
+  function void init_reg(REG_T reg_name, bit support_clic = 0);
     super.init_reg(reg_name);
     case(reg_name) inside
       /////////////// Machine mode reigster //////////////
@@ -253,11 +253,26 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // Machine Cause Register
-      MCAUSE: begin
-        privil_level = M_LEVEL;
-        add_field("CODE",  4,  WLRL);
-        add_field("WLRL", XLEN-5, WLRL);
-        add_field("INTERRUPT",  1,  WARL);
+      if (!support_clic) begin
+        MCAUSE: begin
+          privil_level = M_LEVEL;
+          add_field("CODE",  4,  WLRL);
+          add_field("WLRL", XLEN-5, WLRL);
+          add_field("INTERRUPT",  1,  WARL);
+        end
+      end
+      else /* support_clic */ begin
+        MCAUSE: begin
+          privil_level = M_LEVEL;
+          add_field("EXCCODE", 12, WLRL);
+          add_field("WARL", 4, WARL);
+          add_field("MPIL", 8, WARL);
+          add_field("WARL", 3, WARL);
+          add_field("MPIE", 1, WARL);
+          add_field("MPP",  2, WARL);
+          add_field("MINHV",1, WARL);
+          add_field("INTERRUPT", 1, WARL);
+        end
       end
       // Machine Trap Value
       MTVAL: begin
@@ -486,11 +501,26 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // Supervisor Cause Register
-      SCAUSE: begin
-        privil_level = S_LEVEL;
-        add_field("CODE",  4,  WLRL);
-        add_field("WLRL", XLEN-5, WLRL);
-        add_field("INTERRUPT",  1,  WARL);
+      if (!support_clic)
+        SCAUSE: begin
+          privil_level = S_LEVEL;
+          add_field("CODE",  4,  WLRL);
+          add_field("WLRL", XLEN-5, WLRL);
+          add_field("INTERRUPT",  1,  WARL);
+        end
+      else /* support_clic */ begin
+        SCAUSE: begin
+          privil_level = S_LEVEL;
+          add_field("EXCCODE", 12, WLRL);
+          add_field("WARL", 4, WARL);
+          add_field("SPIL", 8, WARL);
+          add_field("WARL", 3, WARL);
+          add_field("SPIE", 1, WARL);
+          add_field("SPP",  2, WARL);
+          add_field("WARL", 1, WARL);
+          add_field("SINHV",1, WARL);
+          add_field("INTERRUPT", 1, WARL);
+        end
       end
       // Supervisor Trap Value
       STVAL: begin
@@ -556,11 +586,26 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // User Cause Register
-      UCAUSE: begin
-        privil_level = U_LEVEL;
-        add_field("CODE",  4,  WLRL);
-        add_field("WLRL", XLEN-5, WLRL);
-        add_field("INTERRUPT",  1,  WARL);
+      if (!support_clic) begin
+        UCAUSE: begin
+          privil_level = U_LEVEL;
+          add_field("CODE",  4,  WLRL);
+          add_field("WLRL", XLEN-5, WLRL);
+          add_field("INTERRUPT",  1,  WARL);
+        end
+      end
+      else /* support_clic */ begin
+        UCAUSE: begin
+          privil_level = U_LEVEL;
+          add_field("EXCCODE", 12, WLRL);
+          add_field("WARL", 4, WARL);
+          add_field("UPIL", 8, WARL);
+          add_field("WARL", 3, WARL);
+          add_field("UPIE", 1, WARL);
+          add_field("WARL", 2, WARL);
+          add_field("UINHV",1, WARL);
+          add_field("INTERRUPT", 1, WARL);
+        end
       end
       // User Trap Value
       UTVAL: begin

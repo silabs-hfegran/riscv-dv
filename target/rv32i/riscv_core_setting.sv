@@ -39,6 +39,10 @@ mtvec_mode_t supported_interrupt_mode[$] = {DIRECT, VECTORED};
 // supported
 int max_interrupt_vector_num = 16;
 
+// CLIC interrupt support
+bit support_clic_interrupt  = 0;
+bit support_basic_interrupt = 1;
+
 // Physical memory protection support
 bit support_pmp = 0;
 

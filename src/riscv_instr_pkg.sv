@@ -749,13 +749,21 @@ package riscv_instr_pkg;
   typedef enum bit [11:0] {
     // User mode register
     USTATUS         = 'h000,  // User status
+    UEDELEG         = 'h002,  // User exception delegation register
+    UIDELEG         = 'h003,  // User interrupt delegation register
     UIE             = 'h004,  // User interrupt-enable register
     UTVEC           = 'h005,  // User trap-handler base address
+    UTVT            = 'h007,  // User trap-handler vector table base address
     USCRATCH        = 'h040,  // Scratch register for user trap handlers
     UEPC            = 'h041,  // User exception program counter
     UCAUSE          = 'h042,  // User trap cause
     UTVAL           = 'h043,  // User bad address or instruction
     UIP             = 'h044,  // User interrupt pending
+    UNXTI           = 'h045,  // User interrupt handler address and enable modifier
+    UINSTATUS       = 'h046,  // User current interrupt levels
+    UINTTHRESH      = 'h047,  // User interrupt-level threshold
+    USCRATCHCSW     = 'h048,  // User conditional scratch swap on priv mode change
+    USCRATCHCSWL    = 'h049,  // User conditional scratch swap on priv level change
     // Unprivileged Floating-Point CSRs
     FFLAGS          = 'h001,  // Floating-Point Accrued Exceptions
     FRM             = 'h002,  // Floating-Point Dynamic Rounding Mode
@@ -833,6 +841,7 @@ package riscv_instr_pkg;
     SIE             = 'h104,  // Supervisor interrupt-enable register
     STVEC           = 'h105,  // Supervisor trap-handler base address
     SCOUNTEREN      = 'h106,  // Supervisor counter enable
+    STVT            = 'h107,  // Supervisor trap-handler vector table base address
     // Supervisor Configuration
     SENVCFG         = 'h10A,  // Supervisor environment configuration register
     // Supervisor Trap Handling
@@ -841,6 +850,11 @@ package riscv_instr_pkg;
     SCAUSE          = 'h142,  // Supervisor trap cause
     STVAL           = 'h143,  // Supervisor bad address or instruction
     SIP             = 'h144,  // Supervisor interrupt pending
+    SNXTI           = 'h145,  // Supervisor interrupt handler address and enable modifier
+    SINSTATUS       = 'h146,  // Supervisor current interrupt levels
+    SINTTHRESH      = 'h147,  // Supervisor interrupt-level threshold
+    SSCRATCHCSW     = 'h148,  // Supervisor conditional scratch swap on priv mode change
+    SSCRATCHCSWL    = 'h149,  // Supervisor conditional scratch swap on priv level change
     // Supervisor Protection and Translation
     SATP            = 'h180,  // Supervisor address translation and protection
     // Supervisor Debug/Trace Register
@@ -893,6 +907,7 @@ package riscv_instr_pkg;
     MIE             = 'h304,  // Machine interrupt-enable register
     MTVEC           = 'h305,  // Machine trap-handler base address
     MCOUNTEREN      = 'h306,  // Machine counter enable
+    MTVT            = 'h307,  // Machine trap-handler vector table base address
     MSTATUSH        = 'h310,  // Additional machine status register, RV32 only
     // Machine Trap Handling
     MSCRATCH        = 'h340,  // Scratch register for machine trap handlers
@@ -900,6 +915,11 @@ package riscv_instr_pkg;
     MCAUSE          = 'h342,  // Machine trap cause
     MTVAL           = 'h343,  // Machine bad address or instruction
     MIP             = 'h344,  // Machine interrupt pending
+    MNXTI           = 'h345,  // Machine interrupt handler address and enable modifier
+    MINSTATUS       = 'h346,  // Machine current interrupt levels
+    MINTTHRESH      = 'h347,  // Machine interrupt-level threshold
+    MSCRATCHCSW     = 'h348,  // Machine conditional scratch swap on priv mode change
+    MSCRATCHCSWL    = 'h349,  // Machine conditional scratch swap on priv level change
     // Machine Configuration
     MENVCFG         = 'h30A,  // Machine environment configuration register
     MENVCFGH        = 'h31A,  // Additional machine env. conf. register, RV32 only
