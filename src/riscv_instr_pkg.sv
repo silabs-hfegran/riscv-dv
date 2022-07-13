@@ -749,21 +749,13 @@ package riscv_instr_pkg;
   typedef enum bit [11:0] {
     // User mode register
     USTATUS         = 'h000,  // User status
-    UEDELEG         = 'h002,  // User exception delegation register
-    UIDELEG         = 'h003,  // User interrupt delegation register
     UIE             = 'h004,  // User interrupt-enable register
     UTVEC           = 'h005,  // User trap-handler base address
-    UTVT            = 'h007,  // User trap-handler vector table base address
     USCRATCH        = 'h040,  // Scratch register for user trap handlers
     UEPC            = 'h041,  // User exception program counter
     UCAUSE          = 'h042,  // User trap cause
     UTVAL           = 'h043,  // User bad address or instruction
     UIP             = 'h044,  // User interrupt pending
-    UNXTI           = 'h045,  // User interrupt handler address and enable modifier
-    UINSTATUS       = 'h046,  // User current interrupt levels
-    UINTTHRESH      = 'h047,  // User interrupt-level threshold
-    USCRATCHCSW     = 'h048,  // User conditional scratch swap on priv mode change
-    USCRATCHCSWL    = 'h049,  // User conditional scratch swap on priv level change
     // Unprivileged Floating-Point CSRs
     FFLAGS          = 'h001,  // Floating-Point Accrued Exceptions
     FRM             = 'h002,  // Floating-Point Dynamic Rounding Mode

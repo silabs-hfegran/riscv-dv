@@ -23,7 +23,7 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
     super.new(name);
   endfunction
 
-  function void init_reg(REG_T reg_name, bit support_clic = 0);
+  function void init_reg(REG_T reg_name);
     super.init_reg(reg_name);
     case(reg_name) inside
       /////////////// Machine mode reigster //////////////
@@ -253,16 +253,14 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // Machine Cause Register
-      if (!support_clic) begin
-        MCAUSE: begin
+      MCAUSE: begin
+        if (!riscv_instr_pkg::support_clic_interrupt) begin
           privil_level = M_LEVEL;
           add_field("CODE",  4,  WLRL);
           add_field("WLRL", XLEN-5, WLRL);
           add_field("INTERRUPT",  1,  WARL);
         end
-      end
-      else /* support_clic */ begin
-        MCAUSE: begin
+        else /* support_clic_interrupt */ begin
           privil_level = M_LEVEL;
           add_field("EXCCODE", 12, WLRL);
           add_field("WARL", 4, WARL);
@@ -501,15 +499,14 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // Supervisor Cause Register
-      if (!support_clic)
-        SCAUSE: begin
+      SCAUSE: begin
+        if (!riscv_instr_pkg::support_clic_interrupt) begin
           privil_level = S_LEVEL;
           add_field("CODE",  4,  WLRL);
           add_field("WLRL", XLEN-5, WLRL);
           add_field("INTERRUPT",  1,  WARL);
         end
-      else /* support_clic */ begin
-        SCAUSE: begin
+        else /* support_clic_interrupt */ begin
           privil_level = S_LEVEL;
           add_field("EXCCODE", 12, WLRL);
           add_field("WARL", 4, WARL);
@@ -586,16 +583,14 @@ class riscv_privil_reg extends riscv_reg#(privileged_reg_t);
         add_field("BASE",  XLEN,  WARL);
       end
       // User Cause Register
-      if (!support_clic) begin
-        UCAUSE: begin
+      UCAUSE: begin
+        if (!riscv_instr_pkg::support_clic_interrupt) begin
           privil_level = U_LEVEL;
           add_field("CODE",  4,  WLRL);
           add_field("WLRL", XLEN-5, WLRL);
           add_field("INTERRUPT",  1,  WARL);
         end
-      end
-      else /* support_clic */ begin
-        UCAUSE: begin
+        else /* support_clic_interrupt */ begin
           privil_level = U_LEVEL;
           add_field("EXCCODE", 12, WLRL);
           add_field("WARL", 4, WARL);
