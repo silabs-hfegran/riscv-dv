@@ -116,10 +116,10 @@ class riscv_compressed_instr extends riscv_instr;
      imm[7:0] inside {[32:255]};
    }
    if (instr_name inside {C_LBU, C_SB}){
-     imm[5:2] == 3'b000;
+     imm[5:2] == 4'b0000;
    }
    if (instr_name inside {C_LHU, C_LH, C_SH}){
-     imm[5:2] == 3'b000;
+     imm[5:2] == 4'b0000;
      imm[0] == 1'b0;
    }
   }
